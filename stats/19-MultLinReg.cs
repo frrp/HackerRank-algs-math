@@ -9,46 +9,57 @@ class Solution
         string[] input = Console.ReadLine().Split();
         int M = Convert.ToInt32(input[0]);
         int N = Convert.ToInt32(input[1]);
-        double[] Y = new double[];
-        double[][] X = new double[][];
-        double[][] F = new double[][];
-        
+        double[][] Y = new double[N][];
+        double[][] X = new double[N][];
         for (int z = 0; z < N; z++)
             {
             X[z] = new double[M+1];
             X[z][0] = 1;
             input = Console.ReadLine().Split();
             for (int w = 1; w < M+1; w++)
-                X[z][w] = Convert.ToInt32(input[w]);
-            Y[z] = Convert.ToInt32(input[M]);
+                X[z][w] = Convert.ToDouble(input[w]);
+            Y[z] = new double[1];
+            Y[z][0] = Convert.ToDouble(input[M]);
             }
         int Q = Int32.Parse(Console.ReadLine());
+        double[][] F = new double[Q][];
+        
         for (int z = 0; z < Q; z++)
             {
                 F[z] = new double[M+1];
                 F[z][0] = 1;
                 input = Console.ReadLine().Split();
                 for (int w = 1; w < M+1; w++)
-                    F[z][w] = Convert.ToInt32(input[w]);
+                    F[z][w] = Convert.ToDouble(input[w-1]);
             }
         double[][] XT = Transpose(X);
-        double[] B = MatrixMultiply(MatrixMultiply(InvertMatrix(MatrixMultiply(XT,X)),XT),Y);
-        
+        double[][] INV = InvertMatrix(MatrixMultiply(XT,X)); //matrix of size (M+1)*(M+1)
+        double[][] XY = MatrixMultiply(XT,Y);
+        double[][] B = MatrixMultiply(INV,XY);
+        double[][] FMisc = new double[1][];
+            
         for (int i = 0; i < Q; i++)
-                Console.WriteLine(Math.Round(MatrixMultiply(F[i],B),2));
+            {
+                FMisc[1] = F[i];
+                Console.WriteLine(MatrixMultiply(FMisc,B));
+            }
     }
 
     
     public static double[][] Transpose(double[][] A)
     {
-        double[][] T = new double[][];
         int m = A[0].Length;
         int n = A.Length;
-        for(i=0;i<n;i++)  
+        double[][] T = new double[m][];
+        for(int i=0;i<n;i++)  
           {  
-          for(j=0;j<m;j++)  
-                T[j,i]=A[i,j];  
-          }  
+          for(int j=0;j<m;j++)
+              {
+              T[j] = new double[n];
+              T[j][i]=A[i][j];  
+              }
+          }
+        return T;
     }
     
     
