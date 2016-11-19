@@ -1,3 +1,4 @@
 # HackerRank-algs-math
 
-Collection of algorithms and mahtematics problems from HackerRank.com.
+Collection of implemented algorithms, data structures and mathematics problems from HackerRank.com.
+Languages used: python, C#, C/C++.
